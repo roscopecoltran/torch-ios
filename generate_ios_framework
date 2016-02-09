@@ -100,13 +100,14 @@ extract_recombine() {
     cd $SCRIPT_DIR
 }
 
+# $SCRIPT_DIR/framework/lib/armv7/libtorch-armv7.a   \
+# $SCRIPT_DIR/framework/lib/armv7s/libtorch-armv7s.a \
+# $SCRIPT_DIR/framework/lib/i386/libtorch-i386.a     \
+# $SCRIPT_DIR/framework/lib/x86_64/libtorch-x86_64.a \
+
 lipo_libs() {
     $ARM_DEV_CMD lipo -create                          \
-    $SCRIPT_DIR/framework/lib/armv7/libtorch-armv7.a   \
-    $SCRIPT_DIR/framework/lib/armv7s/libtorch-armv7s.a \
     $SCRIPT_DIR/framework/lib/arm64/libtorch-arm64.a   \
-    $SCRIPT_DIR/framework/lib/i386/libtorch-i386.a     \
-    $SCRIPT_DIR/framework/lib/x86_64/libtorch-x86_64.a \
     -output $SCRIPT_DIR/framework/lib/libtorch.a
 }
 
@@ -116,18 +117,18 @@ rm -rf $SCRIPT_DIR/framework/include
 rm -rf $SCRIPT_DIR/Torch.framework
 
 echo "generating torch"
-generate_arch armv7
-generate_arch armv7s
+# generate_arch armv7
+# generate_arch armv7s
 generate_arch arm64
-generate_arch i386
-generate_arch x86_64
+# generate_arch i386
+# generate_arch x86_64
 
 echo "extracting archives and recombining"
-extract_recombine armv7
-extract_recombine armv7s
+# extract_recombine armv7
+# extract_recombine armv7s
 extract_recombine arm64
-extract_recombine i386
-extract_recombine x86_64
+# extract_recombine i386
+# extract_recombine x86_64
 
 echo "creating universal binary"
 lipo_libs
